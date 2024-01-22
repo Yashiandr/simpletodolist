@@ -80,11 +80,10 @@ export const globalTypes = {
     toolbar: {
       icon: 'circlehollow',
       items: [
-        { value: 'light', icon: 'circlehollow', title: 'light' },
-        { value: 'dark', icon: 'circle', title: 'dark' },
+        { value: 'light', icon: 'eye', title: 'light' },
+        { value: 'dark', icon: 'eyeclose', title: 'dark' },
         { value: 'side-by-side', icon: 'sidebar', title: 'side by side' },
       ],
-      showName: true,
     },
   },
 }
