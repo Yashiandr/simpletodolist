@@ -13,6 +13,8 @@ export const GlobalStyles = createGlobalStyle`
         --delete: #E50000;
         --crossedTextLight: rgba(37, 37, 37, .5);
         --crossedTextBlack: rgba(255, 255, 255, .5);
+
+        --checkbox: url(../images/checkbox.png);
     }
 
     body {

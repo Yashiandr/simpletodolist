@@ -1,0 +1,31 @@
+.checkbox {
+    -webkit-appearance: none;
+    position: relative;
+    display: inline-block;
+    width: 1.625rem;
+    height: 1.625rem;
+    box-sizing: border-box;
+    border-radius: .125rem;
+    border: .0625rem solid var(--purple);
+    margin: 1.0625rem;
+}
+
+.checkbox:checked {
+    background-color: var(--purple);
+}
+
+.checkbox:checked::after {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    bottom: .3125rem;
+    left: .0625rem;
+    right: 0;
+    margin: auto;
+    content: "";
+    width: .4375rem;
+    height: .875rem;
+    border-top: .125rem solid var(--white);
+    border-left: .125rem solid var(--white);
+    transform: rotate(-135deg);
+}
