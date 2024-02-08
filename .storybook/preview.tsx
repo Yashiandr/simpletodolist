@@ -17,59 +17,18 @@ const preview = {
   },
 };
 
-const ThemeBlock = styled.div<{ left?: boolean; fill?: boolean }>(
-  ({ left, fill, theme }) =>
-    css`
-        box-sizing: border-box;
-        position: absolute;
-        top: 0;
-        left: ${left || fill ? 0 : '50vw'};
-        border-right: ${left ? '2px dashed #E50000' : 'none'};
-        right: ${left ? '50vw' : 0};
-        width: ${fill ? '100vw' : '50vw'};
-        height: 100vh;
-        bottom: 0;
-        overflow: auto;
-        padding: 1rem;
-        background: var(${theme.body});
-    }
-    `
-)
-
 const withTheme:  Decorator = (Story, context) => {
     const  theme = context.parameters.theme || context.globals.theme;
     const storyTheme = theme === 'light' ? lightTheme : darkTheme
 
-    switch(theme) {
-        case 'side-by-side': {
-            return (
-                <>
-                    <ThemeProvider theme={lightTheme}>
-                        <GlobalStyles />
-                        <ThemeBlock left>
-                            <Story />
-                        </ThemeBlock>
-                    </ThemeProvider>
-                    <ThemeProvider theme={darkTheme}>
-                        <GlobalStyles />
-                        <ThemeBlock>
-                            <Story />
-                        </ThemeBlock>
-                    </ThemeProvider>
-                </>
-            )
-        }
-        default: {
-            return (
-                <ThemeProvider theme={storyTheme}>
-                    <GlobalStyles/>
-                    <ThemeBlock fill>
-                        <Story/>
-                    </ThemeBlock>
-                 </ThemeProvider> 
-            )
-        }
-    }
+    return (
+      <>
+        <ThemeProvider theme={storyTheme}>
+          <GlobalStyles />
+          <Story />
+        </ThemeProvider>
+      </>
+    )
 }
 
 export const globalTypes = {
@@ -82,7 +41,6 @@ export const globalTypes = {
       items: [
         { value: 'light', icon: 'eye', title: 'light' },
         { value: 'dark', icon: 'eyeclose', title: 'dark' },
-        { value: 'side-by-side', icon: 'sidebar', title: 'side by side' },
       ],
     },
   },
