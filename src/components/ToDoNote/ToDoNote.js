@@ -1,30 +1,31 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react';
-import './Checkbox.css'
-import ToDoes from './ToDoNote.style.tsx';
+import { ToDoes, Checkbox } from './ToDoNote.style.tsx';
+import { Reorder } from 'framer-motion';
 
-const ToDoNote = ({ id, label='note', checked=true}) => {
-    const defaultChecked = checked ? checked : false;
+const ToDoNote = ({ todo, theme }) => {
+    const defaultChecked = todo.checked ? todo.checked : false;
     const [ isChecked, setIsChecked ] = useState(defaultChecked);
-
     return (
-        <ToDoes check = {isChecked.toString()}>
-            <input
-                id={id}
+        <Reorder.Item
+            as={ToDoes}
+            value={todo}
+            $check={isChecked}
+        >
+            <Checkbox
                 type='checkbox'
-                className='checkbox'
                 checked={isChecked}
                 onChange={() => setIsChecked((prev) => !prev)}
             />
-            <span>{label}</span>
-        </ToDoes>
+            <span>{todo.title}</span>
+        </Reorder.Item>
     )
 }
 
 ToDoNote.propTypes = {
     id: PropTypes.number,
     checked: PropTypes.bool,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
 }
 
-export default ToDoNote
+export default ToDoNote 
