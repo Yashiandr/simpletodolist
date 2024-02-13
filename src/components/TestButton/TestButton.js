@@ -1,5 +1,5 @@
 import React from "react";
-import {func, string} from 'prop-types';
+import {func} from 'prop-types';
 import Button from "./TestButton.style";
 
 
@@ -8,7 +8,6 @@ const TestButton = ({theme, themeToggler}) => {
 }
 
 TestButton.propTypes = {
-    theme: string.isRequired,
     themeToggler: func.isRequired,
 }
 

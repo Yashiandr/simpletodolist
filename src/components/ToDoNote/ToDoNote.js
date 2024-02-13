@@ -3,29 +3,28 @@ import { useState } from 'react';
 import { ToDoes, Checkbox } from './ToDoNote.style.tsx';
 import { Reorder } from 'framer-motion';
 
-const ToDoNote = ({ todo, theme }) => {
-    const defaultChecked = todo.checked ? todo.checked : false;
+const ToDoNote = ({ todos }) => {
+    const defaultChecked = todos.checked ? todos.checked : false;
     const [ isChecked, setIsChecked ] = useState(defaultChecked);
     return (
         <Reorder.Item
             as={ToDoes}
-            value={todo}
+            value={todos}
             $check={isChecked}
+            whileDrag={{cursor: 'grabbing',}}
         >
             <Checkbox
                 type='checkbox'
                 checked={isChecked}
                 onChange={() => setIsChecked((prev) => !prev)}
             />
-            <span>{todo.title}</span>
+            <span>{todos.title}</span>
         </Reorder.Item>
     )
 }
 
 ToDoNote.propTypes = {
-    id: PropTypes.number,
-    checked: PropTypes.bool,
-    label: PropTypes.string,
+    todo: { id: PropTypes.number, title: PropTypes.string, checked: PropTypes.bool },
 }
 
 export default ToDoNote 

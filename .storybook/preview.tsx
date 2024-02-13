@@ -2,8 +2,9 @@
 import React from 'react';
 import { GlobalStyles } from '../src/components/globalStyles';
 import { lightTheme, darkTheme } from '../src/components/Themes';
-import styled, { css, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { Decorator } from '@storybook/react';
+
 
 const preview = {
   parameters: {
@@ -17,6 +18,7 @@ const preview = {
   },
 };
 
+
 const withTheme:  Decorator = (Story, context) => {
     const  theme = context.parameters.theme || context.globals.theme;
     const storyTheme = theme === 'light' ? lightTheme : darkTheme
@@ -24,8 +26,8 @@ const withTheme:  Decorator = (Story, context) => {
     return (
       <>
         <ThemeProvider theme={storyTheme}>
-          <GlobalStyles />
-          <Story />
+            <GlobalStyles />
+            <Story />
         </ThemeProvider>
       </>
     )

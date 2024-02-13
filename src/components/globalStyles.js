@@ -17,6 +17,11 @@ export const GlobalStyles = createGlobalStyle`
         --checkbox: url(../images/checkbox.png);
     }
 
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
     body {
         height: 100vh;
         background-color: var(${({theme}) => theme.body});

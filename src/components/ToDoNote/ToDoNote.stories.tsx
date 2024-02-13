@@ -1,9 +1,51 @@
 import ToDoNote from "./ToDoNote";
-import styled, {css} from "styled-components";
+import styled, {ThemeProvider, css} from "styled-components";
 import { Reorder } from 'framer-motion';
 import React, { useState } from "react";
+import { darkTheme, lightTheme } from "../Themes";
 
-export default { component: ToDoNote }
+export default { 
+    component: ToDoNote,
+    tags: ['autodocs'],
+    }
+
+    const Box = styled.ol<{}>(
+    ({theme}) => 
+    css`
+        display: flex;
+        flex-direction: column;
+        min-width: 32.5rem;
+        list-style: none;
+        background-color: inherit;
+
+        li:first-child {
+            border-top: .0625rem transparent solid !important;
+            border-bottom: .0625rem var(${theme.inputColor}) solid;
+        }
+
+        li+li {
+            border-top: .03125rem var(${theme.inputColor}) solid !important;
+            border-bottom: .03125rem var(${theme.inputColor}) solid !important;
+        }
+
+        li:last-child {
+            border-bottom: .03125rem transparent solid !important;
+            transition: border 1s ease, background-color .5s ease ;
+        }
+    `
+)
+
+const TestBox = (args: any) => {
+    const [ todos, setTodos ] = useState(args.todos)
+    
+    return (
+    <Reorder.Group as={Box} axis="y" values={todos} onReorder={setTodos} center={args.center}>
+        {todos.map((todo: any) => (
+            <ToDoNote key={todo.id} todos={todo} />
+        ))}
+    </Reorder.Group>
+    )
+}
 
 export const Default = { 
     args: {
@@ -29,43 +71,6 @@ export const Unchecked = {
     },
 }
 
-const Box = styled.ol<{center?: boolean}>(
-    ({center, theme}) => 
-    css`
-        display: flex;
-        flex-direction: column;
-        max-width: 32.5rem;
-        margin: ${center ? 'auto' : '0'};
-        list-style: none;
-
-        li:first-child {
-            border-top: 1px transparent solid !important;
-            border-bottom: 1px var(${theme.inputColor}) solid;
-        }
-
-        li+li {
-            border-top: .5px var(${theme.inputColor}) solid !important;
-            border-bottom: .5px var(${theme.inputColor}) solid !important;
-        }
-
-        li:last-child {
-            border-bottom: 1px transparent solid !important;
-        }
-    `
-)
-
-const TestBox = (args: any) => {
-    const [ todos, setTodos ] = useState(args.todos)
-    
-    return (
-    <Reorder.Group as={Box} axis="y" values={todos} onReorder={setTodos} center={args.center}>
-        {todos.map((todo) => (
-            <ToDoNote key={todo.id} todo={todo} theme />
-        ))}
-    </Reorder.Group>
-    )
-}
-
 export const InBox = {
     args: {
         todos: [
@@ -76,14 +81,55 @@ export const InBox = {
             {id: 5, title: 'note#5', checked: false},
             {id: 6, title: 'note#6', checked: true},
         ],
-        center: true,
     },
 
+    parameters: {
+        layout: 'centered'
+    },
+    
     render: (args: any) => 
-        <TestBox {...args}/>
+        <TestBox {...args} />
 }
 
 export const InBoxDark = {
     ...InBox,
-    parameters: {theme: 'dark'},
+    parameters: {
+        ...InBox.parameters,
+        theme: 'dark'
+    },
 }
+
+const ThemeBlock = styled.div<{$left?: boolean}>(
+    ({$left, theme}) =>
+    css`
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: ${$left ? 0 : '50vw'};
+        border-right: ${$left ? '2px dashed #E50000' : 'none'};
+        right: ${$left ? '50vw' : 0};
+        width: 50vw;
+        height: 100vh;
+        bottom: 0;
+        overflow: auto;
+        padding: 3rem;
+        background-color: var(${({theme}) => theme.body});
+    `
+)
+
+export const SideBySide = {
+    ...InBox,
+    render: (args: any) => 
+        <>
+            <ThemeProvider theme={lightTheme}>
+                <ThemeBlock $left>
+                    <TestBox {...args} />
+                </ThemeBlock>
+            </ThemeProvider>
+            <ThemeProvider theme={darkTheme}>
+                <ThemeBlock>
+                    <TestBox {...args} />
+                </ThemeBlock>
+            </ThemeProvider>
+        </>
+};

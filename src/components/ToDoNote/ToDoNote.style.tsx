@@ -7,15 +7,16 @@ const ToDoes = styled.li<{ $check?: boolean}>(
         align-items: center;
         font-family: 'Kanit', sans-serif;
         color: var(${({theme}) => $check ? theme.crossedText : theme.mainText });
-        padding: 20px 0;
+        padding: 1.25rem 0;
         font-size: 20px;
         font-weight: 500;
         text-transform: uppercase;
         text-decoration-line: ${$check ? 'line-through' : 'none'};
         user-select: none;
-        gap: 17px;
-        background-color: var(${({theme}) => theme.body});
+        gap: 1.0625rem;
+        background-color: inherit;
         transition: border 1s ease, background-color .5s ease ;
+        cursor: grab;
     `
 )
 
@@ -30,6 +31,7 @@ const Checkbox = styled.input<{}>(() =>
         border-radius: .125rem;
         border: .0625rem solid var(--purple);
         margin: 0;
+        cursor: pointer;
 
         &:checked {
             background-color: var(--purple);
